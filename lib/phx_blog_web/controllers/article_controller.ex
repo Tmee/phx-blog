@@ -1,4 +1,4 @@
-defmodule PhxBlogWeb.SoftwareController do
+defmodule PhxBlogWeb.ArticleController do
   use PhxBlogWeb, :controller
 
   def index(conn, _params) do

@@ -22,7 +22,7 @@ defmodule PhxBlogWeb.Router do
     # get "/*path", FourOhFour, :index
 
     get "/", PageController, :home
-    get "/software", SoftwareController, :index
+    get "/blog", ArticleController, :index
   end
 
   # Other scopes may use custom stacks.
