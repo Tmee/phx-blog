@@ -4,4 +4,8 @@ defmodule PhxBlogWeb.ArticleController do
   def index(conn, _params) do
     render(conn, :index)
   end
+
+  def aws_docker(conn, _params) do
+    render(conn, :aws_docker)
+  end
 end

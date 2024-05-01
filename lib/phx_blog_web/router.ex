@@ -14,15 +14,13 @@ defmodule PhxBlogWeb.Router do
     plug :accepts, ["json"]
   end
 
-
-
-
   scope "/", PhxBlogWeb do
     pipe_through :browser
     # get "/*path", FourOhFour, :index
 
     get "/", PageController, :home
     get "/blog", ArticleController, :index
+    get "/blog/aws-docker", ArticleController, :aws_docker
   end
 
   # Other scopes may use custom stacks.
