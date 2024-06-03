@@ -35,3 +35,4 @@ phx_blog-*.tar
 npm-debug.log
 /assets/node_modules/
 
+docker/db/
