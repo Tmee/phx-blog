@@ -8,12 +8,10 @@ services:
       - "5432:5432"
     volumes:
       - ./db/dev:/var/lib/postgresql/data
-    networks:
-      - blog
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=phx_blog
+      - POSTGRES_DB=phx_blog_dev
 
   webapp:
     container_name: webapp
@@ -23,19 +21,10 @@ services:
     image: webapp:latest
     ports:
       - "4000:4000"
-    networks:
-      - blog
     depends_on:
       - postgresql
     environment:
-      - DB_ROOT_PASSWORD=postgres
-      - DB_ROOT_HOSTNAME=postgres
       - DB_POOL_SIZE=3
-      # - AWS_IMAGE_ACCESS_KEY_ID=
-      # - AWS_IMAGE_SECRET_KEY=WmMl4+I7CA9a/WxLl17PJ6/IOw8Yognhg35d3g5C
-      # - AWS_S3_IMAGE_HOST=macrostax-team-images.s3.us-east-2.amazonaws.com
-      # - AWS_S3_IMAGE_SCHEME=https://
-      # - AWS_S3_IMAGE_REGION=us-east-2
-      
-networks:
-  blog:
+#################################### added 
+      - DATABASE_URL=ecto://postgres:postgres@localhost/phx_blog_dev
+      - SECRET_KEY_BASE=37gj1uv6QFrvyB14f41SrJCqUgnkQ8IGCRDpehJb8jAuELRB1XGPXGdGTeSqV7CV

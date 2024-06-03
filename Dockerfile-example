@@ -1,0 +1,92 @@
+
+# # Use the official Elixir image as the builder
+ARG ELIXIR_VERSION=1.14.0
+ARG OTP_VERSION=25.0.3
+ARG DEBIAN_VERSION=bullseye-20210902-slim
+ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
+
+FROM ${BUILDER_IMAGE} as builder
+
+# # Install build dependencies
+RUN apt-get update -y && \
+    apt-get install -y build-essential git nodejs npm curl && \
+    apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+# # Prepare build directory
+WORKDIR /app
+
+# # Install Hex and Rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+# # Set build environment
+ENV MIX_ENV="prod"
+
+# # Install mix dependencies
+COPY mix.exs mix.lock ./
+RUN mix deps.get --only $MIX_ENV
+
+# # Copy compile-time config files
+COPY config/config.exs config/${MIX_ENV}.exs config/
+# # ... (add any other necessary steps for your project)
+
+RUN mix deps.compile
+COPY priv priv
+COPY lib lib
+COPY assets assets
+WORKDIR assets
+RUN node --version
+RUN npm i -g yarn; yarn set version stable
+RUN yarn install
+WORKDIR ../
+# compile assets
+RUN mix assets.deploy
+# Compile the release
+RUN mix compile
+
+# Use an official Elixir image as the builder
+# FROM hexpm/elixir:1.14.0-erlang-25.0.3-debian-bullseye-20210902-slim as builder
+
+# Install build dependencies
+# RUN apt-get update -y && \
+#     apt-get install -y build-essential git curl && \
+#     apt-get clean && \
+#     rm -f /var/lib/apt/lists/*_*
+
+# Set the working directory
+# WORKDIR /app
+
+# Install Hex and Rebar
+# RUN mix local.hex --force && \
+#     mix local.rebar --force
+
+# Set the build environment
+# ENV MIX_ENV="prod"
+
+# Install mix dependencies
+# COPY mix.exs mix.lock ./
+# RUN mix deps.get --only $MIX_ENV
+
+# Create a directory for compile-time config files
+# RUN mkdir config ?????????????????
+
+# Copy compile-time config files before compiling dependencies
+# This ensures that relevant config changes trigger recompilation
+# COPY config/config.exs config/${MIX_ENV}.exs config/
+
+# ... (Add any other necessary steps for your specific project)
+
+# Use a separate runtime image
+FROM hexpm/elixir:1.14.0-erlang-25.0.3-debian-bullseye-20210902-slim
+
+WORKDIR /release
+
+COPY --from=builder --chown=release:release /app/_build/prod/rel/phx_blog .
+COPY --chown=release:release ./docker/startup.sh /usr/local/bin/startup.sh
+
+RUN chmod +x /usr/local/bin/startup.sh
+
+USER release
+EXPOSE 4000
+
+CMD ["startup.sh"]

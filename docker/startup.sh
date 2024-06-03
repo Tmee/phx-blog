@@ -1,3 +1,3 @@
 #!/bin/sh
-bin/main_package eval "mix ecto.migrate"
-bin/main_package start
+bin eval "mix ecto.setup"
+bin start

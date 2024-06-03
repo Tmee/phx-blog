@@ -11,9 +11,9 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.16.2-erlang-26.2.4-debian-bullseye-20240423-slim
 #
-ARG ELIXIR_VERSION=1.16.2
-ARG OTP_VERSION=26.2.4
-ARG DEBIAN_VERSION=bullseye-20240423-slim
+ARG ELIXIR_VERSION=1.16.1
+ARG OTP_VERSION=26.2.2
+ARG DEBIAN_VERSION=bullseye-20240130-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
@@ -52,7 +52,7 @@ COPY lib lib
 COPY assets assets
 
 # compile assets
-RUN mix assets.deploy
+# RUN mix assets.deploy
 
 # Compile the release
 RUN mix compile
@@ -78,16 +78,20 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+RUN adduser --system --group release 
+  #  mkdir /release && \
+  #  chown -R release: /release
+
 WORKDIR "/app"
-RUN chown nobody /app
+RUN chown release /app
 
 # set runner ENV
 ENV MIX_ENV="prod"
 
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/phx_blog ./
+COPY --from=builder --chown=release:release /app/_build/${MIX_ENV}/rel/phx_blog ./
 
-USER nobody
+USER release
 
 # If using an environment that doesn't automatically reap zombie processes, it is
 # advised to add an init process such as tini via `apt-get install`
