@@ -2,7 +2,7 @@ version: "3.8"
 services:
 
   postgresql:
-    container_name: blog-postgres
+    container_name: blog-db
     image: postgres:13
     ports:
       - "5432:5432"
@@ -26,5 +26,5 @@ services:
     environment:
       - DB_POOL_SIZE=3
 #################################### added 
-      - DATABASE_URL=ecto://postgres:postgres@localhost/phx_blog_dev
+      - DATABASE_URL=ecto://postgres:postgres@blog-db/phx_blog_dev
       - SECRET_KEY_BASE=37gj1uv6QFrvyB14f41SrJCqUgnkQ8IGCRDpehJb8jAuELRB1XGPXGdGTeSqV7CV
