@@ -11,7 +11,7 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.16.2-erlang-26.2.4-debian-bullseye-20240423-slim
 #
-ARG ELIXIR_VERSION=1.16.1
+ARG ELIXIR_VERSION=1.16.2
 ARG OTP_VERSION=26.2.2
 ARG DEBIAN_VERSION=bullseye-20240130-slim
 
@@ -52,7 +52,7 @@ COPY lib lib
 COPY assets assets
 
 # compile assets
-# RUN mix assets.deploy
+RUN mix assets.deploy
 
 # Compile the release
 RUN mix compile

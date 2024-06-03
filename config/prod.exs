@@ -18,3 +18,7 @@ config :logger, level: :info
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
+
+# force all traffic to SSL
+config :phx_blog, PhxBlogWeb.Endpoint,
+   force_ssl: [rewrite_on: [:x_forwarded_proto]]
