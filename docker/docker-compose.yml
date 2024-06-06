@@ -28,3 +28,4 @@ services:
 #################################### added 
       - DATABASE_URL=ecto://postgres:postgres@blog-db/phx_blog_dev
       - SECRET_KEY_BASE=37gj1uv6QFrvyB14f41SrJCqUgnkQ8IGCRDpehJb8jAuELRB1XGPXGdGTeSqV7CV
+      # - PHX_HOST=127.0.0.1

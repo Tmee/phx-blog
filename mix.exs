@@ -69,7 +69,18 @@ defmodule PhxBlog.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
+      "assets.build": ["tailwind phx_blog", "esbuild phx_blog"],
+      "assets.deploy": [
+        "tailwind phx_blog --minify",
+        "esbuild phx_blog --minify",
+        "phx.digest"
+      ]
     ]
   end
 end
+# "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
