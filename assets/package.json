@@ -1,5 +1,8 @@
 {
     "scripts": {
       "deploy": "cd .. && mix assets.deploy && rm -f _build/esbuild*"
+    },
+    "dependencies": {
+      "flowbite": "^2.3.0"
     }
   }
