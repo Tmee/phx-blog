@@ -1,0 +1,11 @@
+{
+    "name": "Tmee",
+    "short_name": "Tmee",
+    "icons": [{
+        "src": "gears.png",
+        "sizes": "512x512"
+    }],
+    "background_color": "#005C8B",
+    "theme_color": "#005C8B",
+    "display": "fullscreen"
+}
