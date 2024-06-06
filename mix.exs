@@ -69,8 +69,7 @@ defmodule PhxBlog.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      # other scripts
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
-end
+  end
 end

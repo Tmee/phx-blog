@@ -20,5 +20,4 @@ config :logger, level: :info
 # of environment variables, is done on config/runtime.exs.
 
 # force all traffic to SSL
-config :phx_blog, PhxBlogWeb.Endpoint,
-   force_ssl: [rewrite_on: [:x_forwarded_proto]]
+config :phx_blog, PhxBlogWeb.Endpoint, force_ssl: [rewrite_on: [:x_forwarded_proto]]
