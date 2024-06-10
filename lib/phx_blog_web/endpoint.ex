@@ -19,6 +19,8 @@ defmodule PhxBlogWeb.Endpoint do
   #
   # You should set gzip to true if you are running phx.digest
   # when deploying your static files in production.
+  plug PhxBlogWeb.Plugs.WWWRedirect
+
   plug Plug.Static,
     at: "/",
     from: :phx_blog,
@@ -50,5 +52,4 @@ defmodule PhxBlogWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug PhxBlogWeb.Router
-  plug PhxBlogWeb.Plugs.WWWRedirect
 end
