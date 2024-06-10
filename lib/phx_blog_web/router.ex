@@ -8,6 +8,7 @@ defmodule PhxBlogWeb.Router do
     plug :put_root_layout, html: {PhxBlogWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug PhxBlogWeb.Plugs.WWWRedirect
   end
 
   pipeline :api do
