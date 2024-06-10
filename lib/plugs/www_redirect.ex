@@ -1,5 +1,5 @@
 defmodule PhxBlogWeb.Plugs.WWWRedirect do
-  import Plug.Conn
+  # import Plug.Conn
 
   def init(options) do
     options
@@ -13,7 +13,7 @@ defmodule PhxBlogWeb.Plugs.WWWRedirect do
   def call(conn, _options) do
     conn
     |> Phoenix.Controller.redirect(external: www_url(conn))
-    |> halt()
+    # |> halt()
   end
 
   defp www_url(%{host: host} = conn)  do
