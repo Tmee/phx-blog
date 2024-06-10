@@ -19,8 +19,6 @@ defmodule PhxBlogWeb.Endpoint do
   #
   # You should set gzip to true if you are running phx.digest
   # when deploying your static files in production.
-  plug PhxBlogWeb.Plugs.WWWRedirect
-
   plug Plug.Static,
     at: "/",
     from: :phx_blog,
@@ -35,7 +33,7 @@ defmodule PhxBlogWeb.Endpoint do
     plug Phoenix.CodeReloader
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :phx_blog
   end
-
+  plug PhxBlogWeb.Plugs.WWWRedirect
   plug Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
     cookie_key: "request_logger"
