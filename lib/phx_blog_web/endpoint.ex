@@ -50,4 +50,5 @@ defmodule PhxBlogWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug PhxBlogWeb.Router
+  plug PhxBlogWeb.Plugs.WWWRedirect
 end
