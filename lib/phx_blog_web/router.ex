@@ -3,12 +3,12 @@ defmodule PhxBlogWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
+    plug PhxBlogWeb.Plugs.WWWRedirect
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, html: {PhxBlogWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug PhxBlogWeb.Plugs.WWWRedirect
   end
 
   pipeline :api do
@@ -21,7 +21,7 @@ defmodule PhxBlogWeb.Router do
 
     get "/", PageController, :home
     get "/blog", ArticleController, :index
-    get "/blog/aws-docker", ArticleController, :aws_docker
+    # get "/blog/aws-docker", ArticleController, :aws_docker
   end
 
   # Other scopes may use custom stacks.
